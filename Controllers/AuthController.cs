@@ -31,7 +31,7 @@ public class AuthController : ControllerBase {
             Name = dto.Name,
             Email = dto.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-            Role = UserRole.USER // Por defecto normal user
+            Role = (dto.Role?.ToUpper() == "ADMIN") ? UserRole.ADMIN : UserRole.USER
         };
 
         _context.Users.Add(user);

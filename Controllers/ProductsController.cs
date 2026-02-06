@@ -33,11 +33,13 @@ public class ProductsController : ControllerBase {
     }
 
     [HttpPost]
-    [Authorize] // Para simplificar, cualquier usuario autenticado puede crear
+    [Authorize(Roles = "ADMIN")] // Regla 1: Solo ADMIN crea/modifica
     public async Task<ActionResult<Product>> PostProduct(CreateProductDto dto) {
         var product = new Product {
             Name = dto.Name,
             Description = dto.Description,
+            ImageUrl = dto.ImageUrl,
+            Category = dto.Category,
             Price = dto.Price,
             Stock = dto.Stock
         };
@@ -49,13 +51,15 @@ public class ProductsController : ControllerBase {
     }
 
     [HttpPut("{id}")]
-    [Authorize]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> PutProduct(Guid id, UpdateProductDto dto) {
         var product = await _context.Products.FindAsync(id);
         if (product == null) return NotFound();
 
         if (dto.Name != null) product.Name = dto.Name;
         if (dto.Description != null) product.Description = dto.Description;
+        if (dto.ImageUrl != null) product.ImageUrl = dto.ImageUrl;
+        if (dto.Category != null) product.Category = dto.Category;
         if (dto.Price.HasValue) product.Price = dto.Price.Value;
         if (dto.Stock.HasValue) product.Stock = dto.Stock.Value;
         if (dto.IsActive.HasValue) product.IsActive = dto.IsActive.Value;
@@ -66,10 +70,16 @@ public class ProductsController : ControllerBase {
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> DeleteProduct(Guid id) {
         var product = await _context.Products.FindAsync(id);
         if (product == null) return NotFound();
+
+        // Regla: No eliminar productos con pedidos
+        var hasOrders = await _context.OrderItems.AnyAsync(oi => oi.ProductId == id);
+        if (hasOrders) {
+            return BadRequest("No se puede eliminar un producto que ya tiene pedidos asociados.");
+        }
 
         product.IsActive = false; // Soft delete
         await _context.SaveChangesAsync();

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/diego/Documentos/OrdersBackend/OrdersBackend.csproj": {}
+    "/home/diego/Documentos/ThePiranhs/OrdersBackend/OrdersBackend.csproj": {}
   },
   "projects": {
-    "/home/diego/Documentos/OrdersBackend/OrdersBackend.csproj": {
+    "/home/diego/Documentos/ThePiranhs/OrdersBackend/OrdersBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/diego/Documentos/OrdersBackend/OrdersBackend.csproj",
+        "projectUniqueName": "/home/diego/Documentos/ThePiranhs/OrdersBackend/OrdersBackend.csproj",
         "projectName": "OrdersBackend",
-        "projectPath": "/home/diego/Documentos/OrdersBackend/OrdersBackend.csproj",
+        "projectPath": "/home/diego/Documentos/ThePiranhs/OrdersBackend/OrdersBackend.csproj",
         "packagesPath": "/home/diego/.nuget/packages/",
-        "outputPath": "/home/diego/Documentos/OrdersBackend/obj/",
+        "outputPath": "/home/diego/Documentos/ThePiranhs/OrdersBackend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/diego/.nuget/NuGet/NuGet.Config"
